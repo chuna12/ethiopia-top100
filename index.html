@@ -3,250 +3,187 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ethiopian Music Charts | Billboard Style</title>
-  <!-- Tailwind CSS CDN -->
+  <title>ETHIOTOP100 | Ethiopian Music Charts</title>
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- FontAwesome Icons -->
+  <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
       background-color: #0b0f17;
       color: #f3f4f6;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
     }
   </style>
 </head>
-<body class="min-h-screen pb-12">
+<body class="min-h-screen pb-16">
 
-  <!-- NAVIGATION BAR -->
-  <header class="border-b border-gray-800 bg-gray-900/80 backdrop-blur sticky top-0 z-40">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <span class="text-2xl font-black tracking-wider text-amber-400">ETHIO<span class="text-white">TOP100</span></span>
+  <!-- HEADER WITH CUSTOM ETHIOTOP100 COLOR LOGO -->
+  <header class="border-b border-gray-800 bg-gray-900/90 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <!-- LOGO: ETHIO (Sky Blue), T (Green), O (Yellow), P (Red), 100 (White) -->
+        <h1 class="text-3xl font-black tracking-widest uppercase">
+          <span class="text-sky-400">ETHIO</span><span class="text-emerald-500">T</span><span class="text-amber-400">O</span><span class="text-red-500">P</span><span class="text-white">100</span>
+        </h1>
       </div>
-      <span class="text-xs px-3 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full font-medium">
-        Official Weekly Chart
-      </span>
+      <button onclick="loadAllCharts()" class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-2 rounded-lg border border-gray-700 transition">
+        <i class="fa-solid fa-rotate-right mr-1"></i> Refresh Charts
+      </button>
     </div>
   </header>
 
-  <!-- HERO SPOTLIGHT -->
-  <section class="max-w-6xl mx-auto px-4 mt-8">
-    <div class="bg-gradient-to-r from-amber-600/20 via-red-600/10 to-green-600/20 border border-gray-800 rounded-2xl p-6 md:p-8">
-      <span class="text-amber-400 text-xs font-bold tracking-widest uppercase mb-2 block">Billboard Weekly Focus</span>
-      <h1 class="text-3xl md:text-5xl font-black mb-2">Ethiopian Top 100 Hits</h1>
-      <p class="text-gray-400 text-sm md:text-base max-w-xl">
-        Discover the highest-trending tracks across Ethiopia. Click any track to view official streaming sources and direct listening instructions.
-      </p>
-    </div>
-  </section>
+  <div class="max-w-7xl mx-auto px-4 mt-8 space-y-10">
 
-  <!-- MAIN CHART CONTAINER -->
-  <main class="max-w-6xl mx-auto px-4 mt-10">
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="text-xl font-bold flex items-center space-x-2">
-        <span>Weekly Rankings</span>
-      </h2>
-      <button id="refreshBtn" class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg border border-gray-700 transition">
-        <i class="fa-solid fa-rotate-right mr-1"></i> Refresh
-      </button>
-    </div>
-
-    <!-- SONG LIST CONTAINER -->
-    <div id="chart-list" class="space-y-3">
-      <!-- Loading Skeleton Placeholder -->
-      <div class="animate-pulse bg-gray-900 border border-gray-800 rounded-xl p-4 flex items-center space-x-4">
-        <div class="w-8 h-8 bg-gray-800 rounded"></div>
-        <div class="w-12 h-12 bg-gray-800 rounded-lg"></div>
-        <div class="flex-1 space-y-2">
-          <div class="h-4 bg-gray-800 rounded w-1/3"></div>
-          <div class="h-3 bg-gray-800 rounded w-1/4"></div>
+    <!-- TOP BANNER ROW: YEARLY TOP 100 ETHIOPIAN MUSIC SPOTLIGHT -->
+    <section class="bg-gradient-to-r from-red-950/40 via-amber-950/30 to-emerald-950/40 border border-amber-500/30 rounded-2xl p-6 shadow-2xl">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <span class="text-xs font-bold text-amber-400 tracking-widest uppercase">Annual Leaderboard</span>
+          <h2 class="text-2xl font-black text-white flex items-center gap-2">
+            <i class="fa-solid fa-crown text-amber-400"></i> Yearly Top 100 Ethiopian Music
+          </h2>
         </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- "WHERE & HOW TO LISTEN" MODAL -->
-  <div id="listen-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-artist">
-    <div class="bg-gray-900 border border-gray-800 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
-      <button id="modalCloseBtn" class="absolute top-4 right-4 text-gray-400 hover:text-white" aria-label="Close dialog">
-        <i class="fa-solid fa-xmark text-xl"></i>
-      </button>
-
-      <div class="mb-4">
-        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider block mb-1">Where to Stream</span>
-        <h3 id="modal-title" class="text-xl font-black">--</h3>
-        <p id="modal-artist" class="text-gray-400 text-sm">--</p>
+        <span class="text-xs text-gray-400">Updated for 2026</span>
       </div>
 
-      <div class="border-t border-gray-800 pt-4 space-y-3" id="modal-links">
-        <!-- Streaming platforms injected here -->
+      <!-- Horizontal Scrollable Row for Yearly Chart -->
+      <div id="yearly-chart" class="flex gap-4 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-gray-800">
+        <div class="text-gray-500 text-sm">Loading Yearly Top 100...</div>
       </div>
-    </div>
+    </section>
+
+    <!-- 3-COLUMN GRID SECTION: WEEKLY, MONTHLY, 3-MONTH -->
+    <section>
+      <h2 class="text-xl font-bold mb-6 text-gray-200 border-l-4 border-amber-400 pl-3">Trending Period Charts</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- COLUMN 1: WEEKLY TOP 10 -->
+        <div class="bg-gray-900/60 border border-gray-800 rounded-2xl p-5 flex flex-col">
+          <div class="flex items-center justify-between pb-4 border-b border-gray-800 mb-4">
+            <h3 class="font-black text-lg text-emerald-400 flex items-center gap-2">
+              <i class="fa-solid fa-bolt"></i> Weekly Top 10
+            </h3>
+            <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20">Live</span>
+          </div>
+          <div id="weekly-chart" class="space-y-3 flex-1">
+            <div class="text-gray-500 text-sm">Loading Weekly Top 10...</div>
+          </div>
+        </div>
+
+        <!-- COLUMN 2: MONTHLY TOP 100 -->
+        <div class="bg-gray-900/60 border border-gray-800 rounded-2xl p-5 flex flex-col">
+          <div class="flex items-center justify-between pb-4 border-b border-gray-800 mb-4">
+            <h3 class="font-black text-lg text-amber-400 flex items-center gap-2">
+              <i class="fa-solid fa-calendar-days"></i> Monthly Top 100
+            </h3>
+            <span class="text-xs bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded border border-amber-500/20">Monthly</span>
+          </div>
+          <div id="monthly-chart" class="space-y-3 flex-1 max-h-[700px] overflow-y-auto pr-1">
+            <div class="text-gray-500 text-sm">Loading Monthly Top 100...</div>
+          </div>
+        </div>
+
+        <!-- COLUMN 3: 3-MONTH TOP 100 -->
+        <div class="bg-gray-900/60 border border-gray-800 rounded-2xl p-5 flex flex-col">
+          <div class="flex items-center justify-between pb-4 border-b border-gray-800 mb-4">
+            <h3 class="font-black text-lg text-sky-400 flex items-center gap-2">
+              <i class="fa-solid fa-chart-line"></i> 3-Month Top 100
+            </h3>
+            <span class="text-xs bg-sky-500/10 text-sky-400 px-2 py-0.5 rounded border border-sky-500/20">Quarterly</span>
+          </div>
+          <div id="three-month-chart" class="space-y-3 flex-1 max-h-[700px] overflow-y-auto pr-1">
+            <div class="text-gray-500 text-sm">Loading 3-Month Top 100...</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
   </div>
 
   <script>
-    // Set your Google Apps Script deployment ID here (provided)
-    const API_DEPLOYMENT_ID = "AKfycby4DrnhQ39ifM7oEKI5vavh5W-bMQRUSoVl2QWK0Cww9Vcmanev727TWiW0ja4LIatA";
-    const API_URL = `https://script.google.com/macros/s/${API_DEPLOYMENT_ID}/exec?action=getChart`;
+    // YOUR GOOGLE APPS SCRIPT WEB APP DEPLOYMENT URL
+    const BASE_API_URL = "https://script.google.com/macros/s/AKfycby4DrnhQ39ifM7oEKI5vavh5W-bMQRUSoVl2QWK0Cww9Vcmanev727TWiW0ja4LIatA/exec?action=getChart";
 
-    // Utility to safely escape strings for use in textContent
-    function safeText(text) {
-      return text == null ? '' : String(text);
-    }
-
-    async function loadChartData() {
-      const container = document.getElementById("chart-list");
+    async function fetchChartData(timeframe) {
       try {
-        const response = await fetch(API_URL);
-        if (!response.ok) {
-          throw new Error(`Network response was not ok (${response.status})`);
-        }
-        const data = await response.json();
-
-        if (!data || data.length === 0) {
-          container.innerHTML = `<div class="text-center py-10 text-gray-500">No chart data found.</div>`;
-          return;
-        }
-
-        container.innerHTML = data.map(track => {
-          // Status Badge Styling
-          let statusBadge = '';
-          if (track.status && String(track.status).includes('UP')) {
-            statusBadge = `<span class="text-green-400 font-bold text-xs bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20"><i class="fa-solid fa-caret-up"></i> ${track.status}</span>`;
-          } else if (track.status && String(track.status).includes('DOWN')) {
-            statusBadge = `<span class="text-red-400 font-bold text-xs bg-red-500/10 px-2 py-0.5 rounded border border-red-500/20"><i class="fa-solid fa-caret-down"></i> ${track.status}</span>`;
-          } else if (track.status === 'NEW') {
-            statusBadge = `<span class="text-amber-400 font-bold text-xs bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">NEW</span>`;
-          } else {
-            statusBadge = `<span class="text-gray-400 font-bold text-xs bg-gray-500/10 px-2 py-0.5 rounded border border-gray-500/20">SAME</span>`;
-          }
-
-          // Use data- attributes instead of inline onclick to avoid quoting issues
-          const title = safeText(track.title);
-          const artist = safeText(track.artist);
-
-          return `
-            <div class="track-item bg-gray-900/60 hover:bg-gray-800/80 border border-gray-800 rounded-xl p-4 transition duration-200 cursor-pointer flex items-center justify-between group" tabindex="0" role="button" data-title="${encodeURIComponent(title)}" data-artist="${encodeURIComponent(artist)}">
-              <div class="flex items-center space-x-4">
-                <span class="text-lg font-black w-6 text-center text-gray-400 group-hover:text-amber-400 transition">${track.rank}</span>
-                <div class="w-12 h-12 bg-gray-800 rounded-lg overflow-hidden border border-gray-700 flex-shrink-0">
-                  <img src="${track.cover_art || 'https://via.placeholder.com/150'}" alt="${title}" class="w-full h-full object-cover">
-                </div>
-                <div>
-                  <h4 class="font-bold text-white text-base leading-snug group-hover:text-amber-400 transition">${title} <span class="text-xs text-gray-500">(${track.title_amharic || ''})</span></h4>
-                  <p class="text-xs text-gray-400">${artist}</p>
-                </div>
-              </div>
-
-              <div class="flex items-center space-x-4">
-                <div class="hidden sm:block text-right">
-                  <div class="text-xs text-gray-400">${Number(track.streams || 0).toLocaleString()} streams</div>
-                </div>
-                <div>${statusBadge}</div>
-                <button class="bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-black p-2 rounded-lg transition border border-amber-500/30" aria-label="Open streaming options">
-                  <i class="fa-solid fa-headphones text-sm"></i>
-                </button>
-              </div>
-            </div>
-          `;
-        }).join('');
-
-        // Attach event delegation handlers after rendering
-        attachChartHandlers();
-
+        const response = await fetch(`${BASE_API_URL}&timeframe=${timeframe}`);
+        return await response.json();
       } catch (error) {
-        console.error("Error fetching chart data:", error);
-        container.innerHTML = `<div class="p-6 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">Failed to connect to Google Sheet API. Please check your API URL or deployment ID in index.html. (${error.message})</div>`;
+        console.error(`Error loading ${timeframe} chart:`, error);
+        return [];
       }
     }
 
-    // Delegated event handlers for opening the modal safely
-    function attachChartHandlers() {
-      const container = document.getElementById('chart-list');
+    function createTrackCardHTML(track, showHorizontal = false) {
+      // Direct YouTube Redirect URL
+      const ytUrl = track.youtube_url || `https://www.youtube.com/results?search_query=${encodeURIComponent(track.title + ' ' + track.artist)}`;
 
-      // Click handler (delegation)
-      container.addEventListener('click', function (e) {
-        const item = e.target.closest('.track-item');
-        if (!item) return;
-        const title = decodeURIComponent(item.dataset.title || '');
-        const artist = decodeURIComponent(item.dataset.artist || '');
-        openListenModal(title, artist);
-      });
+      if (showHorizontal) {
+        return `
+          <a href="${ytUrl}" target="_blank" class="flex-shrink-0 w-48 bg-gray-900 border border-gray-800 hover:border-amber-500/50 rounded-xl p-3 transition group block">
+            <div class="w-full h-32 bg-gray-800 rounded-lg overflow-hidden relative mb-2">
+              <img src="${track.cover_art || 'https://via.placeholder.com/150'}" class="w-full h-full object-cover">
+              <span class="absolute top-2 left-2 bg-black/80 text-amber-400 text-xs font-black px-2 py-0.5 rounded">#${track.rank}</span>
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition">
+                <i class="fa-brands fa-youtube text-red-500 text-3xl"></i>
+              </div>
+            </div>
+            <h4 class="font-bold text-sm text-white truncate group-hover:text-amber-400">${track.title}</h4>
+            <p class="text-xs text-gray-400 truncate">${track.artist}</p>
+          </a>
+        `;
+      }
 
-      // Keyboard support: Enter/Space to open
-      container.addEventListener('keydown', function (e) {
-        const item = e.target.closest && e.target.closest('.track-item');
-        if (!item) return;
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          const title = decodeURIComponent(item.dataset.title || '');
-          const artist = decodeURIComponent(item.dataset.artist || '');
-          openListenModal(title, artist);
-        }
-      });
-    }
-
-    function openListenModal(title, artist) {
-      document.getElementById('modal-title').innerText = title;
-      document.getElementById('modal-artist').innerText = artist;
-
-      // Dummy platform guidance demo (Can be linked dynamically from your Platform_Links API)
-      const linksContainer = document.getElementById('modal-links');
-      linksContainer.innerHTML = `
-        <a href="https://youtube.com" target="_blank" class="flex items-center justify-between p-3 bg-gray-800 hover:bg-gray-700 rounded-xl transition border border-gray-700">
-          <div class="flex items-center space-x-3">
-            <i class="fa-brands fa-youtube text-red-500 text-xl"></i>
-            <div>
-              <div class="font-bold text-sm">YouTube Official Video</div>
-              <div class="text-xs text-gray-400">Stream high quality music video</div>
+      return `
+        <a href="${ytUrl}" target="_blank" class="bg-gray-900/80 hover:bg-gray-800 border border-gray-800 hover:border-gray-700 rounded-xl p-3 transition flex items-center justify-between group block">
+          <div class="flex items-center space-x-3 overflow-hidden">
+            <span class="text-sm font-black w-5 text-center text-gray-400 group-hover:text-amber-400">${track.rank}</span>
+            <div class="w-10 h-10 bg-gray-800 rounded-lg overflow-hidden flex-shrink-0 relative">
+              <img src="${track.cover_art || 'https://via.placeholder.com/150'}" class="w-full h-full object-cover">
+            </div>
+            <div class="truncate">
+              <h4 class="font-bold text-sm text-white truncate group-hover:text-amber-400">${track.title}</h4>
+              <p class="text-xs text-gray-400 truncate">${track.artist}</p>
             </div>
           </div>
-          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-gray-400"></i>
-        </a>
-        <a href="https://t.me" target="_blank" class="flex items-center justify-between p-3 bg-gray-800 hover:bg-gray-700 rounded-xl transition border border-gray-700">
-          <div class="flex items-center space-x-3">
-            <i class="fa-brands fa-telegram text-sky-400 text-xl"></i>
-            <div>
-              <div class="font-bold text-sm">Telegram Bot / Audio Channel</div>
-              <div class="text-xs text-gray-400">Listen via Telegram channel audio bot</div>
-            </div>
+          <div class="flex items-center space-x-2 flex-shrink-0 pl-2">
+            <span class="text-red-500 group-hover:scale-110 transition"><i class="fa-brands fa-youtube text-lg"></i></span>
           </div>
-          <i class="fa-solid fa-arrow-up-right-from-square text-xs text-gray-400"></i>
         </a>
       `;
-
-      const modal = document.getElementById('listen-modal');
-      modal.classList.remove('hidden');
-      // Move focus to the modal close button for screen reader users
-      document.getElementById('modalCloseBtn').focus();
-
-      // Add Escape key handler to close
-      document.addEventListener('keydown', escCloseHandler);
     }
 
-    function closeModal() {
-      const modal = document.getElementById('listen-modal');
-      modal.classList.add('hidden');
-      document.removeEventListener('keydown', escCloseHandler);
-      // Return focus to the refresh button after close
-      document.getElementById('refreshBtn').focus();
+    async function loadAllCharts() {
+      // 1. Fetch Weekly Chart
+      const weeklyData = await fetchChartData("weekly");
+      document.getElementById("weekly-chart").innerHTML = weeklyData.length > 0 
+        ? weeklyData.map(t => createTrackCardHTML(t)).join('') 
+        : `<div class="text-xs text-gray-500">No weekly entries found.</div>`;
+
+      // 2. Fetch Monthly Chart
+      const monthlyData = await fetchChartData("monthly");
+      document.getElementById("monthly-chart").innerHTML = monthlyData.length > 0 
+        ? monthlyData.map(t => createTrackCardHTML(t)).join('') 
+        : `<div class="text-xs text-gray-500">No monthly entries found.</div>`;
+
+      // 3. Fetch 3-Month Chart
+      const threeMonthData = await fetchChartData("3month");
+      document.getElementById("three-month-chart").innerHTML = threeMonthData.length > 0 
+        ? threeMonthData.map(t => createTrackCardHTML(t)).join('') 
+        : `<div class="text-xs text-gray-500">No 3-month entries found.</div>`;
+
+      // 4. Fetch Yearly Chart
+      const yearlyData = await fetchChartData("yearly");
+      document.getElementById("yearly-chart").innerHTML = yearlyData.length > 0 
+        ? yearlyData.map(t => createTrackCardHTML(t, true)).join('') 
+        : `<div class="text-xs text-gray-500">No yearly entries found.</div>`;
     }
 
-    function escCloseHandler(e) {
-      if (e.key === 'Escape') {
-        closeModal();
-      }
-    }
-
-    // Wire close button
-    document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
-
-    // Wire refresh button
-    document.getElementById('refreshBtn').addEventListener('click', loadChartData);
-
-    // Load data on start
-    loadChartData();
+    // Initialize on page load
+    loadAllCharts();
   </script>
 </body>
 </html>
